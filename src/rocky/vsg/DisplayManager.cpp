@@ -208,9 +208,11 @@ DisplayManager::addWindow(vsg::ref_ptr<vsg::WindowTraits> traits)
     {
         traits->deviceFeatures = vsg::DeviceFeatures::create();
     }
-    traits->deviceExtensionNames.push_back(VK_NV_FRAGMENT_SHADER_BARYCENTRIC_EXTENSION_NAME);
+
+    // Commented for now for Intel(R) UHD Graphics GPU
+    /* traits->deviceExtensionNames.push_back(VK_NV_FRAGMENT_SHADER_BARYCENTRIC_EXTENSION_NAME);
     auto& bary = traits->deviceFeatures->get<VkPhysicalDeviceFragmentShaderBarycentricFeaturesKHR, VK_STRUCTURE_TYPE_PHYSICAL_DEVICE_FRAGMENT_SHADER_BARYCENTRIC_FEATURES_KHR>();
-    bary.fragmentShaderBarycentric = true;
+    bary.fragmentShaderBarycentric = true; */
 
     // share the device across all windows
     traits->device = sharedDevice();

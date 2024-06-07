@@ -1,5 +1,5 @@
 #version 450
-// NOT SUPPORTED FOR INTEL #extension GL_NV_fragment_shader_barycentric : enable
+#extension GL_NV_fragment_shader_barycentric : enable
 #pragma import_defines(USE_MESH_TEXTURE)
 
 layout(location = 1) in vec2 uv;
@@ -28,9 +28,11 @@ void main()
     out_color.rgb *= texture(mesh_texture, uv).rgb;
 #endif
 
+#ifdef GL_NV_fragment_shader_barycentric
     if (vary.wireframe > 0.0)
     {
-        // NOT SUPPORTED FOR INTEL float b = min(gl_BaryCoordNV.x, min(gl_BaryCoordNV.y, gl_BaryCoordNV.z)) * vary.wireframe;
-        // NOT SUPPORTED FOR INTEL out_color.rgb = mix(vec3(1, 1, 1), out_color.rgb, clamp(b, 0.85, 1.0));
+        float b = min(gl_BaryCoordNV.x, min(gl_BaryCoordNV.y, gl_BaryCoordNV.z)) * vary.wireframe;
+        out_color.rgb = mix(vec3(1, 1, 1), out_color.rgb, clamp(b, 0.85, 1.0));
     }
+#endif
 }
